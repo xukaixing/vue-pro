@@ -15,6 +15,7 @@
 </template>
 
 <script>
+// @默认代表src，在webpack.base.conf中定义alias别名
 import app01 from "@/components/App01";
 import app02 from "@/components/App02";
 import app03 from "@/components/App03";

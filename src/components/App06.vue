@@ -8,19 +8,23 @@
       <input v-model="question" />
     </p>
     <p>{{ answer }}</p>
+    <p>parent counter:{{ count }}</p>
+    <button @click="showParentCounter">parentClick</button>
+    <child-demo :counter="count" @child-event="showChildCounter"></child-demo>
   </div>
 </template>
 
 <script>
 import _ from "lodash";
 import axios from "axios";
-
+import childDemo from "./children/child01";
 export default {
   name: "app06",
   data() {
     return {
       question: "",
       answer: "I cannot give you an answer until you ask a question!",
+      count: 0,
     };
   },
   watch: {
@@ -60,6 +64,15 @@ export default {
           vm.answer = "Error! Could not reach the API. " + error;
         });
     },
+    showParentCounter() {
+      this.count++;
+    },
+    showChildCounter(childCounter) {
+      this.count = childCounter + 2;
+    },
+  },
+  components: {
+    childDemo,
   },
 };
 </script>
