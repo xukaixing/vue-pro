@@ -64,9 +64,16 @@ export default {
           vm.answer = "Error! Could not reach the API. " + error;
         });
     },
+    /**
+     * 显示父级counter
+     */
     showParentCounter() {
       this.count++;
     },
+    /**
+     * 显示子组件counter，主要为实现子组件出发更新父组件属性
+     * 更新父组件属性，自动影响子组件属性
+     */
     showChildCounter(childCounter) {
       this.count = childCounter + 2;
     },
