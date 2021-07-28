@@ -7,7 +7,11 @@
 <script>
 export default {
   props: {
-    counter: Number,
+    counter: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -26,4 +30,4 @@ export default {
     },
   },
 };
-</script>>
+</script>
