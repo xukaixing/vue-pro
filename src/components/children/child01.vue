@@ -20,13 +20,15 @@ export default {
     };
   },
   watch: {
-    tmpCounter(o, n) {},
+    tmpCounter(o, n) {
+      console.info(o, n);
+    },
   },
 
   methods: {
     showMsg() {
       // 触发父级绑定的事件
-      this.$emit("child-event", this.counter);
+      this.$emit('child-event', this.counter);
     },
   },
 };
