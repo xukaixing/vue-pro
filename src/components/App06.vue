@@ -1,41 +1,41 @@
 <template id="app-6">
   <div id="watch-example">
-    <p
-      class="header-title"
-      :style="{ fontSize: 18 + 'px', fontWeight: 'bold' }"
-    >
+    <p class="header-title" :style="{ fontSize: 18 + 'px', fontWeight: 'bold' }">
       App06:Ask a yes/no question:
       <input v-model="question" />
     </p>
     <p>{{ answer }}</p>
     <p>parent counter:{{ count }}</p>
     <button @click="showParentCounter">parentClick</button>
-    <child-demo :counter="count" @child-event="showChildCounter"></child-demo>
+    <child-demo :counter="count" :username-change.sync="username" @child-event="showChildCounter"></child-demo>
+    <p>show child componets:</p>
+    <base-input label="Username:" v-model="username" @blur="doBlur" required placeholder="Enter your username"></base-input>
+    <p>show child checkbox:</p>
+    <base-checkbox v-model="isChecked" :value="username"></base-checkbox>
   </div>
 </template>
 
 <script>
-import _ from "lodash";
-import axios from "axios";
-import childDemo from "./children/child01";
+import _ from 'lodash';
+import axios from 'axios';
+import childDemo from './children/child01';
+import baseInput from './base/base-input';
+import baseCheckbox from './base/base-checkbox';
 export default {
-  name: "app06",
+  name: 'app06',
   data() {
     return {
-      question: "",
-      answer: "I cannot give you an answer until you ask a question!",
+      question: '',
+      answer: 'I cannot give you an answer until you ask a question!',
       count: 0,
+      username: 'andyten',
+      isChecked: true,
     };
   },
   watch: {
     // 如果 `question` 发生改变，这个函数就会运行
     question(newQuestion, oldQuestion) {
-      this.answer =
-        "Waiting for you to stop typing...{" +
-        oldQuestion +
-        "}:{" +
-        newQuestion +
-        "}";
+      this.answer = 'Waiting for you to stop typing...{' + oldQuestion + '}:{' + newQuestion + '}';
       this.debouncedGetAnswer();
     },
   },
@@ -49,19 +49,19 @@ export default {
   },
   methods: {
     getAnswer() {
-      if (this.question.indexOf("?") === -1) {
-        this.answer = "Questions usually contain a question mark. ;-)";
+      if (this.question.indexOf('?') === -1) {
+        this.answer = 'Questions usually contain a question mark. ;-)';
         return;
       }
-      this.answer = "Thinking...";
+      this.answer = 'Thinking...';
       var vm = this;
       axios
-        .get("https://yesno.wtf/api")
-        .then(function (response) {
+        .get('https://yesno.wtf/api')
+        .then(function(response) {
           vm.answer = _.capitalize(response.data.answer);
         })
-        .catch(function (error) {
-          vm.answer = "Error! Could not reach the API. " + error;
+        .catch(function(error) {
+          vm.answer = 'Error! Could not reach the API. ' + error;
         });
     },
     /**
@@ -77,9 +77,14 @@ export default {
     showChildCounter(childCounter) {
       this.count = childCounter + 2;
     },
+    doBlur() {
+      alert(this.count);
+    },
   },
   components: {
     childDemo,
+    baseInput,
+    baseCheckbox,
   },
 };
 </script>

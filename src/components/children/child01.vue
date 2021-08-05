@@ -1,7 +1,7 @@
 <template>
   <div>
     <p style="color: red">child counter:{{ counter }}</p>
-    <button @click="showMsg">childClick</button>
+    <button @click="showMsg">双向绑定{{ usernameChange }}</button>
   </div>
 </template>
 <script>
@@ -11,6 +11,9 @@ export default {
       type: Number,
       required: true,
       default: 0,
+    },
+    usernameChange: {
+      type: String,
     },
   },
   data() {
@@ -27,6 +30,10 @@ export default {
 
   methods: {
     showMsg() {
+      // .sync双向绑定，子组件更改值后，父组件值同步更改,.sync类似语法糖
+      // 等价于父组件定义了回调方法：@update:username-change，然后传入新的值
+      this.$emit('update:username-change', 'andyten-' + this.counter);
+      //alert(this.username2);
       // 触发父级绑定的事件
       this.$emit('child-event', this.counter);
     },
